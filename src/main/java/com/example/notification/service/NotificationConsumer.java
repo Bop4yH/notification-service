@@ -20,6 +20,8 @@ public class NotificationConsumer {
 
     private final WalletClient walletClient;
 
+    private final ReceiptService receiptService;
+
     private final ProcessedEventRepository processedEventRepository;
 
     @KafkaListener(topics = "transfer-notifications")
@@ -35,12 +37,11 @@ public class NotificationConsumer {
 
         try {
             AccountResponse sender = walletClient.getAccount(event.getFromAccountId());
-            log.info("Sender Name: {}", sender.getOwnerName());
+            receiptService.generateAndSave(event, sender.getOwnerName(), sender.getCurrency());
 
             processedEventRepository.save(new ProcessedEvent(eventId));
-
         } catch (Exception e) {
-            log.error("Error processing transfer", e);
+            log.error("Error processing event", e);
             throw e;
         }
     }
