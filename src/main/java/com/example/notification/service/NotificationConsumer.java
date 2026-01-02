@@ -24,6 +24,8 @@ public class NotificationConsumer {
 
     private final ProcessedEventRepository processedEventRepository;
 
+    private final AchievementService achievementService;
+
     @KafkaListener(topics = "transfer-notifications")
     @Transactional
     public void handleTransfer(TransferCompletedEvent event) {
@@ -44,5 +46,7 @@ public class NotificationConsumer {
             log.error("Error processing event", e);
             throw e;
         }
+
+        achievementService.processTransfer(event.getFromAccountId());
     }
 }

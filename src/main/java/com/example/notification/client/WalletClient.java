@@ -1,6 +1,7 @@
 package com.example.notification.client;
 
 import com.example.notification.dto.client.AccountResponse;
+import com.example.notification.dto.client.AccountStatisticsResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,4 +13,7 @@ public interface WalletClient {
 
     @GetMapping("/accounts/{id}")
     AccountResponse getAccount(@PathVariable("id") UUID id);
+
+    @GetMapping("/accounts/{id}/notification-stats")
+    AccountStatisticsResponse getAccountStats(@PathVariable("id") UUID id);
 }
