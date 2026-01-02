@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 @Builder(toBuilder = true)
 @Jacksonized
 public class AccountStatisticsResponse {
+
     long incomingTransfersCount;
 
     long outgoingTransfersCount;
